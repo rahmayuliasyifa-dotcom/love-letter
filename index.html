@@ -8,25 +8,38 @@
     <style>
         :root { --pink-utama: #ff8fa3; --pink-tua: #ff4d6d; --bg-pink: #fff0f3; }
         body { margin: 0; background: var(--bg-pink); font-family: 'Gaegu', cursive; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
-        .card { background: white; padding: 30px 20px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4); text-align: center; width: 320px; min-height: 420px; display: flex; flex-direction: column; justify-content: center; border: 3px solid #ffccd5; position: relative; }
-        .btn-back { position: absolute; top: 20px; left: 20px; background: none; border: none; color: var(--pink-utama); font-size: 1.2rem; cursor: pointer; display: none; z-index: 100; }
-        h1 { color: var(--pink-tua); font-size: 2.2rem; margin: 0 0 10px 0; text-transform: lowercase; }
-        .special-title { font-size: 1.4rem !important; color: var(--pink-tua); margin-bottom: 20px; text-transform: lowercase; }
-        .btn-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 10px; min-height: 120px; }
+        
+        .card { background: white; padding: 25px; border-radius: 30px; box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4); text-align: center; width: 320px; min-height: 480px; display: flex; flex-direction: column; justify-content: center; border: 3px solid #ffccd5; position: relative; z-index: 10; }
+        
+        h1 { color: var(--pink-tua); font-size: 2rem; margin: 0 0 10px 0; text-transform: lowercase; }
+        .section { display: none; width: 100%; }
+        .active { display: flex; flex-direction: column; align-items: center; animation: heartFade 0.6s ease; }
+        
         button { border: none; padding: 12px 25px; border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: all 0.3s; font-family: 'Gaegu', cursive; text-transform: lowercase; }
-        .btn-yes { background: var(--pink-utama); color: white; box-shadow: 0 4px 10px rgba(255, 143, 163, 0.3); }
-        .btn-no { background: #ffccd5; color: var(--pink-tua); pointer-events: none; }
-        .section { display: none; }
-        .active { display: block; animation: heartFade 0.6s ease; }
+        .btn-yes { background: var(--pink-utama); color: white; z-index: 100; }
+        .btn-no { background: #ffccd5; color: var(--pink-tua); pointer-events: none; transition: 0.3s; }
+        
+        .btn-container { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px; min-height: 150px; width: 100%; position: relative; }
+
+        /* Style Numpad */
+        .pin-display { font-family: 'Quicksand', sans-serif; font-size: 2rem; letter-spacing: 10px; color: var(--pink-tua); margin: 10px 0; min-height: 40px; }
+        .numpad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+        .num-btn { width: 50px; height: 50px; border-radius: 50%; background: #fff0f3; color: var(--pink-tua); font-family: 'Quicksand', sans-serif; font-size: 1.2rem; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; border: 1px solid #ffccd5; }
+        .num-btn:active { background: var(--pink-utama); color: white; }
+        .num-clear { grid-column: span 3; background: #ffe5ec; font-size: 0.9rem; border-radius: 15px; height: 35px; margin-top: 5px; }
+
+        /* Amplop Fixed */
+        .envelope-wrapper { margin: 40px auto 20px; position: relative; width: 180px; height: 120px; }
+        .envelope { width: 100%; height: 100%; background: var(--pink-utama); position: relative; cursor: pointer; border-radius: 0 0 10px 10px; z-index: 2; }
+        .flap { position: absolute; top: 0; left: 0; border-left: 90px solid transparent; border-right: 90px solid transparent; border-top: 70px solid var(--pink-tua); transform-origin: top; transition: 0.5s; z-index: 4; }
+        .heart-seal { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); font-size: 25px; z-index: 5; transition: 0.3s; pointer-events: none; }
+        .letter { position: absolute; top: 10px; left: 5%; width: 90%; height: 90px; background: white; transition: 0.6s; z-index: 1; padding: 15px; box-sizing: border-box; text-align: left; border-radius: 5px; font-family: 'Quicksand', sans-serif; color: #555; overflow: hidden; opacity: 0; }
+        
+        .open .flap { transform: rotateX(180deg); }
+        .open .heart-seal { opacity: 0; transform: translateX(-50%) translateY(-30px); }
+        .open .letter { transform: translateY(-120px); height: 240px; z-index: 10; overflow-y: auto; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); opacity: 1; }
+        
         @keyframes heartFade { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
-        .photo-frame { width: 160px; height: 160px; margin: 15px auto; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .photo-frame img { width: 100%; height: auto; border-radius: 15px; }
-        .envelope { width: 180px; height: 110px; background: var(--pink-utama); margin: 20px auto; position: relative; cursor: pointer; border-radius: 0 0 10px 10px; transition: 0.3s; }
-        .flap { position: absolute; top: 0; left: 0; border-left: 90px solid transparent; border-right: 90px solid transparent; border-top: 65px solid var(--pink-tua); transform-origin: top; transition: 0.5s; }
-        .letter { position: absolute; bottom: 5px; left: 5%; width: 90%; height: 90px; background: white; transition: 0.6s; z-index: -1; padding: 10px; box-sizing: border-box; text-align: left; border-radius: 5px; font-family: 'Quicksand', sans-serif !important; color: #555; overflow: hidden; }
-        .letter p { font-size: 9px !important; line-height: 1.5 !important; margin: 0 !important; font-weight: 600; text-transform: lowercase; }
-        .open .flap { transform: rotateX(180deg); z-index: 0; }
-        .open .letter { transform: translateY(-110px); z-index: 10; height: 210px; overflow-y: auto; box-shadow: 0 -5px 15px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
@@ -36,73 +49,93 @@
     </audio>
 
     <div class="card">
-        <button class="btn-back" id="backButton" onclick="prevStep()">❮ back</button>
-
         <div id="step1" class="section active">
             <h1>halooo ojik! ✨</h1>
-            <p style="font-size: 1rem; color: #ff8fa3;">ada sesuatu buat kamu...</p>
+            <p style="color: #ff8fa3;">ada sesuatu buat kamu...</p>
             <button class="btn-yes" onclick="playMusic(); nextStep(2)">klik akuuu 💖</button>
         </div>
 
         <div id="step2" class="section">
-            <h2 style="color: var(--pink-tua); font-size: 1.6rem;">kamu sayang gak sama aku?</h2>
+            <h2 style="color: var(--pink-tua); font-size: 1.5rem;">kamu sayang gak sama aku?</h2>
             <div class="btn-container">
                 <button class="btn-yes" onclick="processPrank()">sayang!</button>
-                <button class="btn-no" id="realNo">gak.</button>
+                <button class="btn-no" id="btnNo">gak.</button>
             </div>
-            <p id="sadMsg" style="font-weight:bold; color:var(--pink-tua); font-size: 0.9rem;"></p>
+            <p id="sadMsg" style="font-weight:bold; color:var(--pink-tua); font-size: 0.8rem; margin-top: 5px;"></p>
         </div>
 
         <div id="step3" class="section">
-            <h1 style="font-size: 2.1rem;">i love you ojik! ❤️</h1>
-            <div class="photo-frame">
-                <img src="https://media.tenor.com/On7tS97me94AAAAj/peach-goma.gif" alt="Lucu">
+            <h2 style="color: var(--pink-tua); font-size: 1.3rem; margin-bottom: 5px;">masukin pin!</h2>
+            <p style="font-size: 0.7rem; color: var(--pink-utama); margin: 0;">clue: tanggal jadian kita (ddmm)</p>
+            <div class="pin-display" id="pinDisplay">****</div>
+            <div class="numpad">
+                <div class="num-btn" onclick="pressNum('1')">1</div>
+                <div class="num-btn" onclick="pressNum('2')">2</div>
+                <div class="num-btn" onclick="pressNum('3')">3</div>
+                <div class="num-btn" onclick="pressNum('4')">4</div>
+                <div class="num-btn" onclick="pressNum('5')">5</div>
+                <div class="num-btn" onclick="pressNum('6')">6</div>
+                <div class="num-btn" onclick="pressNum('7')">7</div>
+                <div class="num-btn" onclick="pressNum('8')">8</div>
+                <div class="num-btn" onclick="pressNum('9')">9</div>
+                <div></div><div class="num-btn" onclick="pressNum('0')">0</div><div></div>
+                <div class="num-btn num-clear" onclick="clearPin()">hapus</div>
             </div>
-            <p style="font-size: 0.9rem; color: #880d1e;">hehehe bercanda ya sayang!</p>
-            <button class="btn-yes" onclick="nextStep(4)">pencet ini ✨</button>
+            <p id="errorMsg" style="color: var(--pink-tua); font-size: 0.7rem; margin-top: 5px;"></p>
         </div>
 
         <div id="step4" class="section">
-            <h1 class="special-title">special message for ojik 🌸</h1>
-            <div class="envelope" onclick="this.classList.toggle('open')">
+            <h1 style="font-size: 1.3rem; color: var(--pink-tua);">special message 🌸</h1>
+            <div class="envelope-wrapper" id="envWrapper" onclick="this.classList.toggle('open')">
                 <div class="flap"></div>
+                <div class="heart-seal">❤️</div>
+                <div class="envelope"></div>
                 <div class="letter">
-                    <p>happy new year, love 💖<br><br>
+                    <p style="font-size: 10px; line-height: 1.6; font-weight: 600; color: #444;">
+                    happy new year, love 💖<br><br>
                     thank you for being my safe place, my favorite person, and my best part of the year. <br><br>
                     i hope this year brings you everything you deserve, and i hope we keep choosing each other, growing together, and making more cute memories. <br><br>
-                    also, hope your patience stays ocean-level when dealing with me, i’m so grateful to have you—always. <br><br>
+                    also, hope your patience stays ocean-level ketika ngadepin aku—i’m so grateful to have you—always. <br><br>
                     lopyuuu ojikkk 💖✨</p>
                 </div>
             </div>
-            <p style="font-size: 0.8rem; color: #ff8fa3; margin-top: 100px;">(klik amplopnya ya!)</p>
+            <p style="font-size: 0.8rem; color: #ff8fa3; margin-top: 20px;">(klik amplopnya ya!)</p>
         </div>
     </div>
 
     <script>
-        let currentStep = 1; let clickCount = 0; let noScale = 1;
-        const sadTexts = ["beneran gak sayang? :( ", "ihhh jahat banget", "ojik beneran pilih gak?", "eumm... 😢"];
         const audio = document.getElementById('bgMusic');
+        let clickCount = 0; let noScale = 1; let currentPin = "";
+        const sadTexts = ["beneran gak sayang akuuu? :( ", "ihhh ojik gak sayang akuu", "ojik beneran pilih gak?", "eumm... 😢"];
 
-        function playMusic() { 
-            audio.play().catch(e => console.log("Musik diputar"));
-        }
-
+        function playMusic() { audio.play().catch(e => console.log("Music play")); }
         function nextStep(step) {
-            currentStep = step;
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + step).classList.add('active');
-            document.getElementById('backButton').style.display = (step > 2) ? 'block' : 'none';
         }
-
-        function prevStep() { if (currentStep > 2) { currentStep = 1; nextStep(1); } }
 
         function processPrank() {
             clickCount++;
             if (clickCount <= 4) {
-                noScale += 0.3; 
-                document.getElementById('realNo').style.transform = `scale(${noScale})`;
+                noScale = 1 + (clickCount * 0.4); 
+                document.getElementById('btnNo').style.transform = `scale(${noScale})`;
                 document.getElementById('sadMsg').innerText = sadTexts[clickCount - 1];
             } else { nextStep(3); }
+        }
+
+        function pressNum(num) {
+            if (currentPin.length < 4) { currentPin += num; updatePinDisplay(); }
+            if (currentPin.length === 4) { setTimeout(checkPin, 300); }
+        }
+        function clearPin() { currentPin = ""; updatePinDisplay(); document.getElementById('errorMsg').innerText = ""; }
+        function updatePinDisplay() {
+            let display = "";
+            for(let i=0; i<4; i++) { display += currentPin[i] ? currentPin[i] : "*"; }
+            document.getElementById('pinDisplay').innerText = display;
+        }
+        function checkPin() {
+            if (currentPin === "0304") { nextStep(4); } 
+            else { document.getElementById('errorMsg').innerText = "pin salah! masa lupa? 😢"; setTimeout(clearPin, 1000); }
         }
     </script>
 </body>
