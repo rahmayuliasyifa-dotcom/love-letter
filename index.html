@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>for ojik sayang ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-utama: #ff8fa3;
+            --pink-tua: #ff4d6d;
+            --bg-pink: #fff0f3;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg-pink);
+            font-family: 'Gaegu', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 20px;
+            border-radius: 30px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+            text-align: center;
+            width: 360px;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 3px solid #ffccd5;
+            position: relative;
+        }
+
+        .btn-back {
+            position: absolute;
+            top: 20px; left: 20px;
+            background: none; border: none;
+            color: var(--pink-utama);
+            font-size: 1.2rem; cursor: pointer;
+            display: none; z-index: 100;
+        }
+
+        h1 { color: var(--pink-tua); font-size: 2.5rem; margin: 0 0 10px 0; text-transform: lowercase; }
+        
+        /* Judul yang sudah dikecilkan */
+        .special-title { 
+            font-size: 1.5rem !important; 
+            color: var(--pink-tua);
+            margin-bottom: 20px;
+            text-transform: lowercase;
+        }
+
+        .btn-container {
+            display: flex; justify-content: center; align-items: center;
+            gap: 15px; margin-top: 10px; min-height: 120px;
+        }
+
+        button {
+            border: none; padding: 10px 25px; border-radius: 50px;
+            font-size: 1.2rem; font-weight: 700; cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-family: 'Gaegu', cursive; text-transform: lowercase;
+        }
+
+        .btn-yes { background: var(--pink-utama); color: white; }
+        .btn-no { background: #ffccd5; color: var(--pink-tua); pointer-events: none; }
+
+        .section { display: none; }
+        .active { display: block; animation: heartFade 0.6s ease; }
+
+        @keyframes heartFade {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .photo-frame {
+            width: 150px; height: 150px; border: 5px solid white; 
+            border-radius: 15px; margin: 15px auto; overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transform: rotate(-2deg);
+        }
+        .photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        .envelope {
+            width: 220px; height: 130px; background: var(--pink-utama); 
+            margin: 20px auto; position: relative; cursor: pointer;
+            border-radius: 0 0 10px 10px;
+        }
+        .flap {
+            position: absolute; top: 0; left: 0;
+            border-left: 110px solid transparent; border-right: 110px solid transparent;
+            border-top: 75px solid var(--pink-tua); transform-origin: top; transition: 0.5s;
+        }
+        
+        .letter {
+            position: absolute; bottom: 5px; left: 5%; width: 90%; height: 110px;
+            background: white; transition: 0.6s; z-index: -1; padding: 10px; 
+            box-sizing: border-box; text-align: left; border-radius: 5px;
+            font-family: 'Quicksand', sans-serif !important; color: #555; overflow: hidden;
+        }
+
+        .letter p {
+            font-size: 8.5px !important; line-height: 1.4 !important;
+            margin: 0 !important; font-weight: 500 !important;
+            text-transform: lowercase !important;
+        }
+
+        .open .flap { transform: rotateX(180deg); z-index: 0; }
+        .open .letter { 
+            transform: translateY(-120px); z-index: 10; 
+            height: 240px; overflow-y: auto; 
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.mboxdrive.com/beabadoobee%20-%20Glue%20Song.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="card">
+        <button class="btn-back" id="backButton" onclick="prevStep()">❮ back</button>
+
+        <div id="step1" class="section active">
+            <h1>halooo ojik! ✨</h1>
+            <button class="btn-yes" onclick="nextStep(2); playMusic()">klik akuuu 💖</button>
+        </div>
+
+        <div id="step2" class="section">
+            <h2 style="color: var(--pink-tua)">kamu sayang gak sama aku?</h2>
+            <div class="btn-container">
+                <button class="btn-yes" onclick="processPrank()">sayang!</button>
+                <button class="btn-no" id="realNo">gak.</button>
+            </div>
+            <p id="sadMsg" style="font-weight:bold; color:var(--pink-tua)"></p>
+        </div>
+
+        <div id="step3" class="section">
+            <h1 style="font-size: 2.3rem;">i love you ojik! ❤️</h1>
+            <div class="photo-frame">
+                <img src="ISI_LINK_FOTO_KAMU_DISINI" alt="Foto Sayang">
+            </div>
+            <p style="font-size: 1rem; color: #880d1e;">hehehe bercanda ya sayang!</p>
+            <button class="btn-yes" onclick="nextStep(4)">pencet ini ✨</button>
+        </div>
+
+        <div id="step4" class="section">
+            <h1 class="special-title">special message for ojik 🌸</h1>
+            <div class="envelope" onclick="this.classList.toggle('open')">
+                <div class="flap"></div>
+                <div class="letter">
+                    <p>happy new year, love 💖<br><br>
+                    thank you for being my safe place, my favorite person, and my best part of the year. <br><br>
+                    i hope this year brings you everything you deserve, and i hope we keep choosing each other, growing together, and making more cute memories. <br><br>
+                    also, hope your patience stays ocean-level when dealing with me, i’m so grateful to have you—always.</p>
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; color: #ff8fa3; margin-top: 100px;">(klik amplopnya ya!)</p>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        let clickCount = 0;
+        let noScale = 1;
+        const sadTexts = ["beneran gak sayang? :( ", "ihhh jahat banget", "ojik beneran pilih gak?", "eumm... 😢"];
+
+        function nextStep(step) {
+            currentStep = step;
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+            document.getElementById('backButton').style.display = (step > 2) ? 'block' : 'none';
+        }
+
+        function prevStep() { if (currentStep > 2) { currentStep = 1; nextStep(1); } }
+        
+        function playMusic() { 
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(e => console.log("Musik butuh interaksi user"));
+        }
+
+        function processPrank() {
+            clickCount++;
+            if (clickCount <= 4) {
+                noScale += 0.3; 
+                document.getElementById('realNo').style.transform = `scale(${noScale})`;
+                document.getElementById('sadMsg').innerText = sadTexts[clickCount - 1];
+            } else { nextStep(3); }
+        }
+    </script>
+</body>
+</html>
